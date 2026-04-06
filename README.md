@@ -1,0 +1,59 @@
+# cyphera-trino
+
+Format-preserving encryption UDFs for [Trino](https://trino.io/).
+
+> **Note**: Currently uses a dummy (reversible shift) cipher as a placeholder.
+> Real FF1 FPE will be wired in when `cyphera-java` is published to Maven.
+
+## Quick Start
+
+```bash
+docker compose up -d
+# Wait for Trino to start (~30s)
+trino http://localhost:8080 < demo.sql
+```
+
+## Functions
+
+### Policy-based (primary interface)
+
+```sql
+SELECT cyphera_protect('ssn', '123-45-6789');
+-- → '456-78-9012' (format preserved, dashes stay)
+
+SELECT cyphera_unprotect('ssn', '456-78-9012');
+-- → '123-45-6789'
+```
+
+### Direct engine (testing / demos)
+
+```sql
+SELECT cyphera_ff1_encrypt('123456789', '<key_hex>', 'digits');
+SELECT cyphera_ff1_decrypt('<ciphertext>', '<key_hex>', 'digits');
+```
+
+## Policy File
+
+Mount a `cyphera.yaml` to `/etc/cyphera/cyphera.yaml`:
+
+```yaml
+policies:
+  ssn:
+    engine: ff1
+    alphabet: digits
+    key_ref: demo-key
+
+keys:
+  demo-key:
+    material: "2B7E151628AED2A6ABF7158809CF4F3C"
+```
+
+Override the path with `CYPHERA_POLICY_FILE` env var.
+
+## Alphabets
+
+| Name | Characters |
+|------|-----------|
+| `digits` | `0-9` |
+| `alpha_lower` | `a-z` |
+| `alphanumeric` | `0-9a-zA-Z` |
