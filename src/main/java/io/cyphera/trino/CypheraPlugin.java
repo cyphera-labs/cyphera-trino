@@ -1,4 +1,4 @@
-package dev.cyphera.trino;
+package io.cyphera.trino;
 
 import io.trino.spi.Plugin;
 

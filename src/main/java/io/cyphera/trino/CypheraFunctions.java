@@ -1,4 +1,4 @@
-package dev.cyphera.trino;
+package io.cyphera.trino;
 
 import io.airlift.slice.Slice;
 import io.airlift.slice.Slices;
