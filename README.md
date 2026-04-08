@@ -21,15 +21,15 @@ trino http://localhost:8080 < demo.sql
 SELECT cyphera_protect('ssn', '123-45-6789');
 -- → '456-78-9012' (format preserved, dashes stay)
 
-SELECT cyphera_unprotect('ssn', '456-78-9012');
+SELECT cyphera_access('ssn', '456-78-9012');
 -- → '123-45-6789'
 ```
 
 ### Direct engine (testing / demos)
 
 ```sql
-SELECT cyphera_ff1_encrypt('123456789', '<key_hex>', 'digits');
-SELECT cyphera_ff1_decrypt('<ciphertext>', '<key_hex>', 'digits');
+SELECT REMOVED_cyphera_ff1_encrypt('123456789', '<key_hex>', 'digits');
+SELECT REMOVED_cyphera_ff1_decrypt('<ciphertext>', '<key_hex>', 'digits');
 ```
 
 ## Policy File

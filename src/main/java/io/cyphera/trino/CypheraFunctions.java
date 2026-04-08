@@ -11,7 +11,7 @@ import io.trino.spi.type.StandardTypes;
 /**
  * Cyphera UDFs for Trino.
  *
- * Policy-based API: cyphera_protect / cyphera_unprotect
+ * Policy-based API: cyphera_protect / cyphera_access
  * Uses the real Cyphera SDK with FF1/FF3 FPE, AES-GCM, Mask, Hash.
  */
 public final class CypheraFunctions {
@@ -36,10 +36,10 @@ public final class CypheraFunctions {
         }
     }
 
-    @ScalarFunction("cyphera_unprotect")
+    @ScalarFunction("cyphera_access")
     @Description("Access (decrypt) a protected value using its embedded tag")
     @SqlType(StandardTypes.VARCHAR)
-    public static Slice cypheraUnprotect(
+    public static Slice cypheraAccess(
             @SqlType(StandardTypes.VARCHAR) Slice protectedValue) {
         try {
             String result = CLIENT.access(protectedValue.toStringUtf8());
