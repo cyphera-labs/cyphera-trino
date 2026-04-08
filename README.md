@@ -2,8 +2,7 @@
 
 Format-preserving encryption UDFs for [Trino](https://trino.io/).
 
-> **Note**: Currently uses a dummy (reversible shift) cipher as a placeholder.
-> Real FF1 FPE will be wired in when `cyphera-java` is published to Maven.
+Built on [`io.cyphera:cyphera`](https://central.sonatype.com/artifact/io.cyphera/cyphera) from Maven Central.
 
 ## Quick Start
 
@@ -36,16 +35,15 @@ SELECT REMOVED_cyphera_ff1_decrypt('<ciphertext>', '<key_hex>', 'digits');
 
 Mount a `cyphera.json` to `/etc/cyphera/cyphera.json`:
 
-```yaml
-policies:
-  ssn:
-    engine: ff1
-    alphabet: digits
-    key_ref: demo-key
-
-keys:
-  demo-key:
-    material: "2B7E151628AED2A6ABF7158809CF4F3C"
+```json
+{
+  "policies": {
+    "ssn": { "engine": "ff1", "alphabet": "digits", "key_ref": "demo-key", "tag": "T01" }
+  },
+  "keys": {
+    "demo-key": { "material": "2B7E151628AED2A6ABF7158809CF4F3C" }
+  }
+}
 ```
 
 Override the path with `CYPHERA_POLICY_FILE` env var.
