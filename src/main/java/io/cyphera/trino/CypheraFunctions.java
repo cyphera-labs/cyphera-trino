@@ -23,7 +23,7 @@ public final class CypheraFunctions {
     // ── Policy-based API (the primary interface) ──
 
     @ScalarFunction("cyphera_protect")
-    @Description("Protect a value using a named policy from cyphera.yaml")
+    @Description("Protect a value using a named policy from cyphera.json")
     @SqlType(StandardTypes.VARCHAR)
     public static Slice cypheraProtect(
             @SqlType(StandardTypes.VARCHAR) Slice policyName,

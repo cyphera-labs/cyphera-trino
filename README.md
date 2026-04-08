@@ -34,7 +34,7 @@ SELECT REMOVED_cyphera_ff1_decrypt('<ciphertext>', '<key_hex>', 'digits');
 
 ## Policy File
 
-Mount a `cyphera.yaml` to `/etc/cyphera/cyphera.yaml`:
+Mount a `cyphera.json` to `/etc/cyphera/cyphera.json`:
 
 ```yaml
 policies:
