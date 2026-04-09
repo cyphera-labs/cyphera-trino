@@ -2,18 +2,19 @@
   "policies": {
     "ssn": {
       "engine": "ff1",
-      "alphabet": "digits",
-      "key_ref": "demo-key"
+      "key_ref": "demo-key",
+      "tag": "T01"
     },
     "credit_card": {
       "engine": "ff1",
-      "alphabet": "digits",
-      "key_ref": "demo-key"
+      "key_ref": "demo-key",
+      "tag": "T02"
     },
     "name": {
       "engine": "ff1",
       "alphabet": "alpha_lower",
-      "key_ref": "demo-key"
+      "key_ref": "demo-key",
+      "tag": "T03"
     }
   },
   "keys": {

@@ -17,10 +17,12 @@ trino http://localhost:8080 < demo.sql
 ### Policy-based (primary interface)
 
 ```sql
+-- Protect with a named policy
 SELECT cyphera_protect('ssn', '123-45-6789');
--- → '456-78-9012' (format preserved, dashes stay)
+-- → 'T01948-37-2150' (tagged, format preserved)
 
-SELECT cyphera_access('ssn', '456-78-9012');
+-- Access — tag tells Cyphera which policy to use, no policy name needed
+SELECT cyphera_access(cyphera_protect('ssn', '123-45-6789'));
 -- → '123-45-6789'
 ```
 
