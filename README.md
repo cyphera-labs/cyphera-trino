@@ -24,13 +24,6 @@ SELECT cyphera_access('ssn', '456-78-9012');
 -- → '123-45-6789'
 ```
 
-### Direct engine (testing / demos)
-
-```sql
-SELECT REMOVED_cyphera_ff1_encrypt('123456789', '<key_hex>', 'digits');
-SELECT REMOVED_cyphera_ff1_decrypt('<ciphertext>', '<key_hex>', 'digits');
-```
-
 ## Policy File
 
 Mount a `cyphera.json` to `/etc/cyphera/cyphera.json`:
