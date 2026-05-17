@@ -11,7 +11,7 @@ import io.trino.spi.type.StandardTypes;
 /**
  * Cyphera UDFs for Trino.
  *
- * Policy-based API: cyphera_protect / cyphera_access
+ * Configuration-based API: cyphera_protect / cyphera_access
  * Uses the real Cyphera SDK with FF1/FF3 FPE, AES-GCM, Mask, Hash.
  */
 public final class CypheraFunctions {
@@ -20,7 +20,7 @@ public final class CypheraFunctions {
 
     private static final Cyphera CLIENT = CypheraLoader.getInstance();
 
-    // ── Policy-based API (the primary interface) ──
+    // ── Configuration-based API (the primary interface) ──
 
     @ScalarFunction("cyphera_protect")
     @Description("Protect a value using a named policy from cyphera.json")
