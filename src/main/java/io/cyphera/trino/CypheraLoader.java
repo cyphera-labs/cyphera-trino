@@ -15,16 +15,16 @@ public final class CypheraLoader {
         if (instance == null) {
             synchronized (CypheraLoader.class) {
                 if (instance == null) {
-                    String path = System.getProperty("cyphera.policy.file",
-                            System.getenv() != null && System.getenv().containsKey("CYPHERA_POLICY_FILE")
-                                ? System.getenv("CYPHERA_POLICY_FILE")
+                    String path = System.getProperty("cyphera.configuration.file",
+                            System.getenv() != null && System.getenv().containsKey("CYPHERA_CONFIGURATION_FILE")
+                                ? System.getenv("CYPHERA_CONFIGURATION_FILE")
                                 : "/etc/cyphera/cyphera.json");
                     try {
                         instance = Cyphera.fromFile(path);
                         LOG.info("Cyphera SDK loaded from " + path);
                     } catch (Exception e) {
-                        LOG.log(Level.SEVERE, "Failed to load Cyphera config: " + path, e);
-                        throw new RuntimeException("Failed to load Cyphera config: " + path, e);
+                        LOG.log(Level.SEVERE, "Failed to load Cyphera configuration: " + path, e);
+                        throw new RuntimeException("Failed to load Cyphera configuration: " + path, e);
                     }
                 }
             }

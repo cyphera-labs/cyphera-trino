@@ -41,7 +41,7 @@ docker build -t cyphera-trino .
    mkdir -p /usr/lib/trino/plugin/cyphera
    cp target/cyphera-trino-0.1.0.jar /usr/lib/trino/plugin/cyphera/
    ```
-2. Place policy file at `/etc/cyphera/cyphera.json` (or set `CYPHERA_POLICY_FILE` env var)
+2. Place configuration file at `/etc/cyphera/cyphera.json` (or set `CYPHERA_CONFIGURATION_FILE` env var)
 3. Restart Trino
 
 The plugin auto-registers `cyphera_protect` and `cyphera_access` functions on startup.
@@ -49,11 +49,11 @@ The plugin auto-registers `cyphera_protect` and `cyphera_access` functions on st
 ## Usage
 
 ```sql
--- Protect with a named policy
+-- Protect with a named configuration
 SELECT cyphera_protect('ssn', '123-45-6789');
--- → 'T01i6J-xF-07pX' (tagged, dashes preserved)
+-- → 'T01i6J-xF-07pX' (header-prefixed, dashes preserved)
 
--- Access — tag tells Cyphera which policy to use, no policy name needed
+-- Access — the embedded header tells Cyphera which configuration to use; no name needed
 SELECT cyphera_access(cyphera_protect('ssn', '123-45-6789'));
 -- → '123-45-6789'
 
@@ -64,10 +64,10 @@ FROM customers;
 
 ## Operations
 
-### Policy Configuration
+### Configuration
 
-- Policy file: `/etc/cyphera/cyphera.json` (override with `CYPHERA_POLICY_FILE` env var)
-- Policy changes require a Trino restart (the plugin loads policy at startup)
+- Configuration file: `/etc/cyphera/cyphera.json` (override with `CYPHERA_CONFIGURATION_FILE` env var)
+- Configuration changes require a Trino restart (the plugin loads at startup)
 
 ### Monitoring
 
@@ -82,18 +82,18 @@ FROM customers;
 
 ### Troubleshooting
 
-- **"Unknown policy"** — policy name doesn't match cyphera.json. Check file path and contents.
-- **"Unknown key"** — key_ref in policy doesn't match a key in the keys section.
+- **"Unknown configuration"** — configuration name doesn't match cyphera.json. Check file path and contents.
+- **"Unknown key"** — `key_ref` in a configuration doesn't match a key in the `keys` section.
 - **Function not found** — JAR not in the plugin directory, or Trino hasn't been restarted.
 
-## Policy File
+## Configuration File
 
 ```json
 {
-  "policies": {
-    "ssn": { "engine": "ff1", "key_ref": "demo-key", "tag": "T01" },
-    "credit_card": { "engine": "ff1", "key_ref": "demo-key", "tag": "T02" },
-    "name": { "engine": "ff1", "alphabet": "alpha_lower", "key_ref": "demo-key", "tag": "T03" }
+  "configurations": {
+    "ssn": { "engine": "ff1", "key_ref": "demo-key", "header": "T01" },
+    "credit_card": { "engine": "ff1", "key_ref": "demo-key", "header": "T02" },
+    "name": { "engine": "ff1", "alphabet": "alpha_lower", "key_ref": "demo-key", "header": "T03" }
   },
   "keys": {
     "demo-key": { "material": "2B7E151628AED2A6ABF7158809CF4F3C" }
@@ -104,8 +104,8 @@ FROM customers;
 ## Future
 
 - Aggregate functions (protect/access across result sets)
-- Dynamic policy reload without restart
-- Trino connector for policy metadata discovery
+- Dynamic configuration reload without restart
+- Trino connector for configuration metadata discovery
 
 ## License
 

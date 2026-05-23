@@ -40,7 +40,7 @@ Output:
  T01i6J-xF-07pX
 ```
 
-### Access (decrypt) using the tag
+### Access (decrypt) using the header
 
 ```sql
 SELECT cyphera_access(cyphera_protect('ssn', '123-45-6789')) AS accessed_ssn;
@@ -97,10 +97,10 @@ Output:
 
 The Cyphera Trino plugin registers SQL functions that call the Cyphera Java SDK:
 
-1. `cyphera_protect('ssn', value)` — looks up the `ssn` policy, encrypts with FF1, prepends tag `T01`, preserves dashes
-2. `cyphera_access(protected_value)` — reads the tag `T01`, finds the `ssn` policy, decrypts
+1. `cyphera_protect('ssn', value)` — looks up the `ssn` configuration, encrypts with FF1, prepends the header `T01`, preserves dashes
+2. `cyphera_access(protected_value)` — reads the header `T01`, finds the `ssn` configuration, decrypts
 
-Policy is loaded from `/etc/cyphera/cyphera.json` mounted into the container.
+Configuration is loaded from `/etc/cyphera/cyphera.json` mounted into the container.
 
 ## Cleanup
 

@@ -4,6 +4,6 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - CYPHERA_POLICY_FILE=/etc/cyphera/cyphera.json
+      - CYPHERA_CONFIGURATION_FILE=/etc/cyphera/cyphera.json
     volumes:
       - ./config/cyphera.json:/etc/cyphera/cyphera.json:ro

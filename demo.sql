@@ -1,15 +1,15 @@
 -- Cyphera Trino UDF Demo
 -- Run: docker compose up -d && trino http://localhost:8080
 
--- ── Policy-based encryption (the primary interface) ──
+-- ── Configuration-based encryption (the primary interface) ──
 
--- Protect SSNs (output is tagged alphanumeric with dashes preserved)
+-- Protect SSNs (output is header-prefixed alphanumeric with dashes preserved)
 SELECT cyphera_protect('ssn', '123-45-6789') AS protected_ssn;
 
--- Access (decrypt) using embedded tag — no policy name needed
+-- Access (decrypt) using the embedded header — no configuration name needed
 SELECT cyphera_access(cyphera_protect('ssn', '123-45-6789')) AS accessed_ssn;
 
--- Access with explicit policy name
+-- Access with explicit configuration name (escape hatch for headerless configurations)
 SELECT cyphera_access('ssn', cyphera_protect('ssn', '123-45-6789')) AS accessed_ssn;
 
 -- Protect credit card numbers
